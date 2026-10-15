@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Calendar, Users, User, Phone, Mail, BedDouble, } from 'lucide-react';
+import { X, Calendar, Users, User, Phone, Mail, BedDouble } from 'lucide-react';
 
 interface ReservationModalProps {
   isOpen: boolean;
@@ -19,8 +19,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onCl
     const formData = new FormData(e.currentTarget);
 
     try {
-      // Remplace "votre-id-formspree" par ton endpoint Formspree (ex: "https://formspree.io/f/xyzngwqe")
-      const response = await fetch(`https://formspree.io/f/xkjokove`, {
+      const response = await fetch("https://formspree.io/f/xkjokove", {
         method: "POST",
         body: formData,
         headers: {
@@ -41,20 +40,23 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onCl
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-lg bg-[#0d1624] border border-[#d4af37]/40 rounded-2xl p-6 sm:p-8 text-white shadow-2xl">
+    /* Le fond devient scrollable (overflow-y-auto) pour accepter le défilement sur mobile */
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-sm overflow-y-auto animate-fadeIn">
+      
+      {/* La boîte de la modale s'adapte naturellement sans hauteur maximale bloquante */}
+      <div className="relative w-full max-w-lg my-auto bg-[#0d1624] border border-[#d4af37]/40 rounded-2xl p-5 sm:p-8 text-white shadow-2xl">
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-2 cursor-pointer"
+          className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-2 cursor-pointer z-20 bg-[#0d1624]/80 rounded-full"
         >
           <X className="w-6 h-6" />
         </button>
 
         {!isSubmitted ? (
           <>
-            <div className="text-center mb-6">
+            <div className="text-center mb-6 pr-6">
               <span className="text-[#d4af37] text-xs font-semibold tracking-widest uppercase">Hôtel Dakar Prestige</span>
-              <h3 className="text-2xl font-serif font-bold mt-1 text-white">Réservez votre séjour</h3>
+              <h3 className="text-xl sm:text-2xl font-serif font-bold mt-1 text-white">Réservez votre séjour</h3>
               <p className="text-gray-400 text-xs mt-1">Remplissez ce formulaire pour valider votre réservation instantanément.</p>
             </div>
 
@@ -166,7 +168,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({ isOpen, onCl
               <button 
                 type="submit"
                 disabled={isLoading}
-                className="w-full mt-3 bg-[#d4af37] hover:bg-[#c59b27] text-gray-950 font-medium py-3 rounded-lg text-xs transition-colors shadow-lg shadow-[#d4af37]/10 cursor-pointer disabled:opacity-50"
+                className="w-full mt-4 bg-[#d4af37] hover:bg-[#c59b27] text-gray-950 font-medium py-3 rounded-lg text-xs transition-colors shadow-lg shadow-[#d4af37]/10 cursor-pointer disabled:opacity-50"
               >
                 {isLoading ? "Envoi en cours..." : "Confirmer la réservation"}
               </button>
